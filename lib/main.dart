@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quote/quote_card.dart';
 import 'package:flutter_quote/quote_statement.dart';
 
 void main() {
@@ -43,6 +44,7 @@ class _QuotesState extends State<Quotes> {
     QuoteStatement(text: "Welcome back", author: "my wife"),
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,50 +52,12 @@ class _QuotesState extends State<Quotes> {
       padding: EdgeInsets.fromLTRB(16, 32, 16, 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: quotes.map((quote) => Quote(quote)).toList(),
+        children: quotes
+            .map((quote) => QuoteCard(
+              quote: quote, 
+              remove: () => setState(() => quotes.remove(quote)),
+            )).toList(),
       ),
     );
-  }
-}
-
-class Quote extends StatelessWidget {
-  final quote;
-  Quote(this.quote);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        color: Colors.cyan[700],
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(quote.text,
-                      style: TextStyle(color: Colors.white, fontSize: 20)),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  Text(quote.author,
-                      style: TextStyle(
-                          color: Colors.grey[800],
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold)),
-                ],
-              ),
-               IconButton(
-                  icon: Icon(Icons.delete,  size: 28,),
-                  color: Colors.cyan[100],
-                  tooltip: 'Remove the quote',
-                  onPressed: () {
-                    
-                  },
-                ),
-            ],
-          ),
-        ));
   }
 }
